@@ -9,6 +9,7 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   console.log('Revalidating detail page...')
+  console.log(req.query)
   const {
     query: { id },
   } = req

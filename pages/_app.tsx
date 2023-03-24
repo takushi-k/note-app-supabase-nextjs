@@ -15,6 +15,8 @@ const queryClient = new QueryClient({
 })
 
 function MyApp({ Component, pageProps }: AppProps) {
+  console.log('MyApp called')
+
   const { push, pathname } = useRouter()
 
   const validateSession = async () => {
@@ -29,7 +31,12 @@ function MyApp({ Component, pageProps }: AppProps) {
       await push('/')
     }
   }
+
   supabase.auth.onAuthStateChange((event, _) => {
+    console.log('onAuthStateChange')
+    console.log(event)
+    console.log(pathname)
+
     if (event === 'SIGNED_IN' && pathname === '/') {
       push('/notes')
     }
@@ -37,7 +44,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       push('/')
     }
   })
+
   useEffect(() => {
+    console.log('_appの useEffect called')
     validateSession()
   }, [])
 

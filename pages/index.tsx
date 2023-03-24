@@ -14,6 +14,7 @@ const Auth: NextPage = () => {
     loginMutation,
     registerMutation,
   } = useMutateAuth()
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (isLogin) {

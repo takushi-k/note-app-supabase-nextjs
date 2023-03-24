@@ -10,10 +10,12 @@ export const useMutateComment = () => {
     async (comment: Omit<Comment, 'created_at' | 'id'>) => {
       const { data, error } = await supabase.from('comments').insert(comment)
       if (error) throw new Error(error.message)
+      console.log({ data })
       return data
     },
     {
       onSuccess: (res) => {
+        console.log({ res })
         revalidateSingle(res[0].note_id)
         reset()
         alert('Successfully completed !!')
@@ -52,10 +54,12 @@ export const useMutateComment = () => {
         .delete()
         .eq('id', id)
       if (error) throw new Error(error.message)
+      console.log({ data })
       return data
     },
     {
       onSuccess: (res) => {
+        console.log(res)
         revalidateSingle(res[0].note_id)
         reset()
         alert('Successfully completed !!')

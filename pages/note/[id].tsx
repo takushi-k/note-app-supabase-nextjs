@@ -9,8 +9,7 @@ import { CommentItem } from '../../components/CommentItem'
 import { Note } from '../../types/types'
 
 const getAllNoteIds = async () => {
-  const { data: ids } = await supabase.from('notes').select('id')
-  console.log(`getAllNoteIds: ${ids}`)
+  let { data: ids } = await supabase.from('notes').select('id')
   return ids!.map((id) => {
     return {
       params: {
@@ -30,6 +29,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
   console.log('ISR invoked - detail page')
+  console.log(ctx.params)
   const { data: note } = await supabase
     .from('notes')
     .select('*, comments(*)')
@@ -46,6 +46,8 @@ type StaticProps = {
   note: Note
 }
 const NotePage: NextPage<StaticProps> = ({ note }) => {
+  console.log(`NotePage: `)
+
   return (
     <Layout title="NoteDetail">
       <p className="text-3xl font-semibold text-blue-500">{note.title}</p>
